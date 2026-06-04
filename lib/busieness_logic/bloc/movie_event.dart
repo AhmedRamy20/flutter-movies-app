@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:movies_app/presentation/views/home_view.dart';
+import 'package:movies_app/enums/category.dart';
 
 @immutable
 abstract class MovieEvent {}

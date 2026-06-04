@@ -1,11 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/movie_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/movie_event.dart';
 import 'package:movies_app/busieness_logic/bloc/movie_state.dart';
+import 'package:movies_app/enums/category.dart';
 import 'package:movies_app/presentation/views/movie_details.dart';
+import 'package:movies_app/widgets/category_grid.dart';
+import 'package:movies_app/widgets/category_res.dart';
+import 'package:movies_app/widgets/search_widget.dart';
+import 'package:movies_app/widgets/trending_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -18,7 +22,7 @@ class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
   late TabController controller;
 
-  final TextEditingController searchController = TextEditingController();
+  final searchController = TextEditingController();
   Timer? _debounce;
 
   final categories = [
@@ -38,7 +42,7 @@ class _HomeViewState extends State<HomeView>
 
     controller.addListener(() {
       if (controller.indexIsChanging) {
-        searchController.clear(); // exit search mode safely
+        searchController.clear();
         context.read<MovieBloc>().add(
           GetMoviesBasedOnCategoryEvent(categories[controller.index]),
         );
@@ -52,8 +56,9 @@ class _HomeViewState extends State<HomeView>
       return;
     }
 
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-
+    _debounce?.cancel();
+    // debouncer is for the search not firing an api call every time we write a word
+    //and it wait 500 mil and then fire event that call the api with the value
     _debounce = Timer(const Duration(milliseconds: 500), () {
       context.read<MovieBloc>().add(SearchMoviesEvent(value));
     });
@@ -72,119 +77,64 @@ class _HomeViewState extends State<HomeView>
     return Scaffold(
       appBar: AppBar(title: const Text("Movies")),
 
-      body: BlocBuilder<MovieBloc, MovieState>(
+      body: BlocConsumer<MovieBloc, MovieState>(
+        listener: (context, state) {
+          if (state is MoviesLoadedState && state.errorMessage != null) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
+          }
+        },
+
         builder: (context, state) {
           if (state is MoviesLoadingState) {
             return const Center(child: CircularProgressIndicator());
           }
 
           if (state is MoviesErrorState) {
-            return Center(child: Text(state.error));
+            return const Center(child: Text("Error"));
           }
 
           if (state is MoviesLoadedState) {
-            final isSearching = state.isSearching == true;
+            final isSearching = state.isSearching;
 
             return Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(12),
-
-                  child: TextField(
-                    controller: searchController,
-                    onChanged: onSearchChanged,
-                    decoration: InputDecoration(
-                      hintText: "Search movies...",
-                      prefixIcon: const Icon(Icons.search),
-
-                      suffixIcon: BlocBuilder<MovieBloc, MovieState>(
-                        builder: (context, state) {
-                          if (state is MoviesLoadedState && state.isSearching) {
-                            return IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {
-                                searchController.clear();
-                                context.read<MovieBloc>().add(
-                                  ClearSearchEvent(),
-                                );
-                              },
-                            );
-                          }
-                          return const SizedBox();
-                        },
-                      ),
-
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                  ),
+                MovieSearchBar(
+                  controller: searchController,
+                  onChanged: onSearchChanged,
+                  onClear: () {
+                    searchController.clear();
+                    context.read<MovieBloc>().add(ClearSearchEvent());
+                  },
+                  isSearching: isSearching,
                 ),
 
                 if (isSearching)
                   Expanded(
-                    child: GridView.builder(
-                      padding: const EdgeInsets.all(12),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 0.65,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
-                      itemCount: state.searchResults?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        final movie = state.searchResults![index];
-
-                        return SafeMovieImage(path: movie.posterPath);
-                      },
-                    ),
+                    child: SearchResultsGrid(movies: state.searchResults),
                   )
                 else
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            height: 220,
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                              ),
-                              itemCount: state.trendingMovies?.length ?? 0,
-                              separatorBuilder: (_, _) =>
-                                  const SizedBox(width: 12),
-                              itemBuilder: (context, index) {
-                                final movie = state.trendingMovies![index];
-
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => MoviesDetailsView(),
-                                      ),
-                                    );
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(16),
-                                    child: SafeMovieImage(
-                                      path: movie.posterPath,
-                                      width: 140,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
+                          TrendingMoviesSection(
+                            movies: state.trendingMovies,
+                            onTap: (i) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => MoviesDetailsView(),
+                                ),
+                              );
+                            },
                           ),
 
                           const SizedBox(height: 10),
 
                           TabBar(
                             controller: controller,
-                            isScrollable: true,
                             tabs: const [
                               Tab(text: "Now Playing"),
                               Tab(text: "Popular"),
@@ -193,26 +143,7 @@ class _HomeViewState extends State<HomeView>
                             ],
                           ),
 
-                          const SizedBox(height: 10),
-
-                          GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.all(12),
-                            itemCount: state.categoryMoviesList?.length ?? 0,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 0.65,
-                                  crossAxisSpacing: 8,
-                                  mainAxisSpacing: 8,
-                                ),
-                            itemBuilder: (context, index) {
-                              final movie = state.categoryMoviesList![index];
-
-                              return SafeMovieImage(path: movie.posterPath);
-                            },
-                          ),
+                          CategoryGrid(movies: state.categoryMoviesList),
                         ],
                       ),
                     ),
@@ -227,44 +158,3 @@ class _HomeViewState extends State<HomeView>
     );
   }
 }
-
-class SafeMovieImage extends StatelessWidget {
-  final String? path;
-  final double? width;
-
-  const SafeMovieImage({super.key, required this.path, this.width});
-
-  @override
-  Widget build(BuildContext context) {
-    if (path == null || path!.isEmpty) {
-      return Container(
-        width: width,
-        color: Colors.grey.shade300,
-        child: const Icon(Icons.image_not_supported),
-      );
-    }
-
-    final url = "https://image.tmdb.org/t/p/w500$path";
-
-    return Image.network(
-      url,
-      width: width,
-      fit: BoxFit.cover,
-
-      errorBuilder: (context, error, stackTrace) {
-        return Container(
-          width: width,
-          color: Colors.grey.shade300,
-          child: const Icon(Icons.broken_image),
-        );
-      },
-
-      loadingBuilder: (context, child, progress) {
-        if (progress == null) return child;
-        return const Center(child: CircularProgressIndicator(strokeWidth: 2));
-      },
-    );
-  }
-}
-
-enum MovieCategory { nowPlaying, popular, topRated, upcoming }
