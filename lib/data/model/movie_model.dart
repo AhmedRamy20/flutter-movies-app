@@ -16,8 +16,8 @@ class Movie {
   final int id;
   final String title;
   final String overview;
-  final String posterPath;
-  final String backdropPath;
+  final String? posterPath;
+  final String? backdropPath;
   final double voteAverage;
   final DateTime? releaseDate;
 
@@ -25,8 +25,8 @@ class Movie {
     required this.id,
     required this.title,
     required this.overview,
-    required this.posterPath,
-    required this.backdropPath,
+    this.posterPath,
+    this.backdropPath,
     required this.voteAverage,
     this.releaseDate,
   });

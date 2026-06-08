@@ -11,6 +11,10 @@ class MoviesRepo {
     return await webService.searchMovies(query);
   }
 
+  Future<List<Movie>> getRecommendedMovies(int movieId) async {
+    return webService.getRecommendedMovies(movieId);
+  }
+
   //? trending movies
   Future<List<Movie>> getTrending() {
     return webService.fetchTrending();

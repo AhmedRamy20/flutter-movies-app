@@ -2,18 +2,25 @@ import 'package:dio/dio.dart';
 import 'package:movies_app/constents/apis.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 
-//? will do a good error handling later
 class WebService {
   late Dio dio;
 
   WebService() {
     BaseOptions options = BaseOptions(
       baseUrl: baseUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 20),
+      receiveTimeout: const Duration(seconds: 20),
       queryParameters: {'api_key': key},
     );
     dio = Dio(options);
+  }
+
+  Future<List<Movie>> getRecommendedMovies(int movieId) async {
+    final response = await dio.get("/movie/$movieId/similar");
+
+    final data = response.data['results'] as List;
+
+    return data.map((e) => Movie.fromJson(e)).toList();
   }
 
   Future<List<Movie>> searchMovies(String query) async {
@@ -42,7 +49,6 @@ class WebService {
     try {
       final response = await dio.get(trendingWeekly);
       if (response.statusCode == 200) {
-        // print(response.data);
         final movies = MoviesModel.fromJson(response.data);
         return movies.results;
       }
@@ -67,7 +73,7 @@ class WebService {
     }
   }
 
-  //? fetch popular movies
+  //? fetch based on the categ
   Future<List<Movie>> fetchMovies(String endPoint) async {
     try {
       final response = await dio.get(endPoint);

@@ -1,4 +1,5 @@
 const baseUrl = "https://api.themoviedb.org/3/";
+const imageUrl = "https://image.tmdb.org/t/p/w300";
 const key = "918dca8129d212c7f7a3da47fd86d04f";
 const nowPlaying = "movie/now_playing";
 const popular = "movie/popular";

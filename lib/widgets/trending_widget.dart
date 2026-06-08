@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/widgets/movie_card_widget.dart';
 
-class TrendingMoviesSection extends StatelessWidget {
-  final List<Movie> movies;
-  final void Function(int index) onTap;
+class TrendingMoviesSection extends StatefulWidget {
+  final List<Movie>? movies;
+  final void Function(Movie movie) onTap;
 
   const TrendingMoviesSection({
     super.key,
@@ -13,27 +13,72 @@ class TrendingMoviesSection extends StatelessWidget {
   });
 
   @override
+  State<TrendingMoviesSection> createState() => _TrendingMoviesSectionState();
+}
+
+class _TrendingMoviesSectionState extends State<TrendingMoviesSection> {
+  late final PageController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = PageController(viewportFraction: 0.45);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (movies.isEmpty) {
+    final safeMovies = widget.movies ?? [];
+
+    if (safeMovies.isEmpty) {
       return const SizedBox(
         height: 220,
         child: Center(child: Text("No trending movies")),
       );
     }
+
     return SizedBox(
-      height: 220,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        itemCount: movies.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 12),
+      height: 240,
+      child: PageView.builder(
+        controller: _controller,
+        padEnds: false,
+        physics: const BouncingScrollPhysics(),
+        itemCount: safeMovies.length,
         itemBuilder: (context, index) {
-          final movie = movies[index];
+          final movie = safeMovies[index];
 
-          return GestureDetector(
-            onTap: () => onTap(index),
+          return AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              double scale = 1.0;
 
-            child: SizedBox(width: 140, child: MovieCard(movie: movie)),
+              if (_controller.position.haveDimensions) {
+                final diff = (_controller.page! - index).abs();
+                scale = (1 - diff * 0.25).clamp(0.85, 1.0);
+              }
+
+              return Transform.scale(
+                scale: scale,
+                child: GestureDetector(
+                  onTap: () => widget.onTap(movie),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: MovieCard(
+                      movie: movie,
+                      heroTag: "movie_${movie.id}_trending",
+                      useHero: true,
+                      showTitle: false,
+                    ),
+                  ),
+                ),
+              );
+            },
           );
         },
       ),
