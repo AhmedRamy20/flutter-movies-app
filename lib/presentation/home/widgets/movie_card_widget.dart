@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/busieness_logic/bloc/home/home_bloc.dart';
-import 'package:movies_app/busieness_logic/bloc/home/home_event.dart';
-import 'package:movies_app/busieness_logic/bloc/home/home_state.dart';
 import 'package:movies_app/data/model/movie_model.dart';
+import 'package:movies_app/data/repository/firestore_fav_repo.dart';
 import 'package:movies_app/helpers/image_helper.dart';
 
 class MovieCard extends StatelessWidget {
@@ -22,18 +20,23 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        final isFavorite = state.favoriteIds.contains(movie.id);
+    final repo = context.read<FireStoreFavoritesRepo>();
 
-        Widget imageWidget = SafeMovieImage(path: movie.posterPath);
+    Widget imageWidget = SafeMovieImage(path: movie.posterPath);
 
-        if (useHero && heroTag != null) {
-          imageWidget = Hero(
-            tag: heroTag!,
-            child: SafeMovieImage(path: movie.posterPath),
-          );
-        }
+    if (useHero && heroTag != null) {
+      imageWidget = Hero(
+        tag: heroTag!,
+        child: SafeMovieImage(path: movie.posterPath),
+      );
+    }
+
+    return StreamBuilder<List<Movie>>(
+      stream: repo.watch(),
+      builder: (context, snapshot) {
+        final favorites = snapshot.data ?? [];
+
+        final isFavorite = favorites.any((m) => m.id == movie.id);
 
         return ClipRRect(
           borderRadius: BorderRadius.circular(16),
@@ -49,10 +52,12 @@ class MovieCard extends StatelessWidget {
                     isFavorite ? Icons.favorite : Icons.favorite_border,
                     color: Colors.red,
                   ),
-                  onPressed: () {
-                    context.read<HomeBloc>().add(
-                      ToggleFavoriteMovieEvent(movie),
-                    );
+                  onPressed: () async {
+                    if (isFavorite) {
+                      await repo.remove(movie.id);
+                    } else {
+                      await repo.add(movie);
+                    }
                   },
                 ),
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/data/model/movie_model.dart';
-import 'package:movies_app/widgets/movie_card_widget.dart';
+import 'package:movies_app/presentation/home/widgets/movie_card_widget.dart';
 
 class CategoryGrid extends StatelessWidget {
   final List movies;

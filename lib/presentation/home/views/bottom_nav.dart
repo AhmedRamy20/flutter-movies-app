@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/presentation/views/fav_view.dart';
-import 'package:movies_app/presentation/views/home_view.dart';
+import 'package:movies_app/presentation/home/views/fav_view.dart';
+import 'package:movies_app/presentation/home/views/home_view.dart';
 
 class BottomNavEntry extends StatefulWidget {
   const BottomNavEntry({super.key});

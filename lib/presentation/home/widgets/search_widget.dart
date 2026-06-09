@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/core/confg/colors/app_colors.dart';
 
 class MovieSearchBar extends StatelessWidget {
   final TextEditingController controller;
@@ -20,14 +21,29 @@ class MovieSearchBar extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: TextField(
         controller: controller,
+        cursorColor: AppColors.primary,
+
         onChanged: onChanged,
         decoration: InputDecoration(
+          // focusedBorder: OutlineInputBorder(),
           hintText: "Search movies...",
-          prefixIcon: const Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search, color: AppColors.primary),
           suffixIcon: isSearching
-              ? IconButton(icon: const Icon(Icons.close), onPressed: onClear)
+              ? IconButton(
+                  icon: const Icon(Icons.close, color: AppColors.primary),
+                  onPressed: onClear,
+                )
               : null,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: const BorderSide(color: Colors.grey),
+          ),
+
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: const BorderSide(color: AppColors.primary, width: 2),
+          ),
         ),
       ),
     );

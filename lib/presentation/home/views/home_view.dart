@@ -2,19 +2,25 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/app_router.dart';
 import 'package:movies_app/busieness_logic/bloc/home/home_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/home/home_event.dart';
 import 'package:movies_app/busieness_logic/bloc/home/home_state.dart';
 import 'package:movies_app/busieness_logic/bloc/search/search_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/search/search_event.dart';
 import 'package:movies_app/busieness_logic/bloc/search/search_state.dart';
-import 'package:movies_app/constents/routes.dart';
+import 'package:movies_app/busieness_logic/bloc/theme/theme_cubit.dart';
+import 'package:movies_app/busieness_logic/bloc/auth/auth_bloc.dart';
+import 'package:movies_app/busieness_logic/bloc/auth/auth_event.dart';
+
 import 'package:movies_app/enums/category.dart';
-import 'package:movies_app/widgets/category_grid.dart';
-import 'package:movies_app/widgets/category_res.dart';
-import 'package:movies_app/widgets/search_widget.dart';
-import 'package:movies_app/widgets/trending_widget.dart';
+import 'package:movies_app/enums/menu_choices.dart';
+import 'package:movies_app/extension/is_dark.dart';
+import 'package:movies_app/extension/sized_box.dart';
+import 'package:movies_app/presentation/home/views/widgets/build_category_section.dart';
+import 'package:movies_app/presentation/home/views/widgets/build_trending_section.dart';
+import 'package:movies_app/presentation/home/widgets/category_res.dart';
+import 'package:movies_app/presentation/home/widgets/search_widget.dart';
+import 'package:movies_app/utils/dialogs/logout_dialog.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -70,7 +76,50 @@ class _HomeViewState extends State<HomeView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Movies")),
+      appBar: AppBar(
+        title: const Text("Movies"),
+        backgroundColor: Colors.transparent,
+        actions: [
+          PopupMenuButton<MenuChoice>(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: MenuChoice.logout,
+                child: const Text("Sign out"),
+              ),
+
+              PopupMenuItem(
+                value: MenuChoice.theme,
+                child: Row(
+                  children: [
+                    Icon(context.isDark ? Icons.light_mode : Icons.dark_mode),
+                    8.width,
+                    Text(context.isDark ? "Light Mode" : "Dark Mode"),
+                  ],
+                ),
+              ),
+            ],
+
+            offset: Offset(0, 60),
+            onSelected: (value) async {
+              switch (value) {
+                case MenuChoice.logout:
+                  final showLogout = await showLogOutDialog(context);
+
+                  if (showLogout) {
+                    if (!context.mounted) return;
+                    context.read<AuthBloc>().add(const AuthEventLoggingOut());
+                  }
+                  break;
+                case MenuChoice.theme:
+                  context.read<ThemeCubit>().updateTheme(
+                    context.isDark ? ThemeMode.light : ThemeMode.dark,
+                  );
+                  break;
+              }
+            },
+          ),
+        ],
+      ),
 
       body: Column(
         children: [
@@ -101,47 +150,15 @@ class _HomeViewState extends State<HomeView>
               // if not searching
               return Expanded(
                 child: BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, homeState) {
+                  builder: (context, state) {
                     return SingleChildScrollView(
                       child: Column(
                         children: [
-                          TrendingMoviesSection(
-                            movies: homeState.trendingMovies,
-                            onTap: (movie) {
-                              Navigator.pushNamed(
-                                context,
-                                Routes.details,
-                                arguments: MovieDetailsArgs(
-                                  movie: movie,
-                                  heroSource: 'trending',
-                                ),
-                              );
-                            },
-                          ),
+                          buildTrendingSection(state, context),
 
-                          TabBar(
-                            controller: controller,
-                            tabs: const [
-                              Tab(text: "Now Playing"),
-                              Tab(text: "Popular"),
-                              Tab(text: "Top Rated"),
-                              Tab(text: "Upcoming"),
-                            ],
-                          ),
+                          10.hight,
 
-                          CategoryGrid(
-                            movies: homeState.categoryMovies,
-                            onTap: (movie) {
-                              Navigator.pushNamed(
-                                context,
-                                Routes.details,
-                                arguments: MovieDetailsArgs(
-                                  movie: movie,
-                                  heroSource: 'grid',
-                                ),
-                              );
-                            },
-                          ),
+                          buildCategorySection(state, context, controller),
                         ],
                       ),
                     );

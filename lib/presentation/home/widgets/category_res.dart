@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/app_router.dart';
 import 'package:movies_app/constents/routes.dart';
 
-import 'package:movies_app/widgets/movie_card_widget.dart';
+import 'package:movies_app/presentation/home/widgets/movie_card_widget.dart';
 
 class SearchResultsGrid extends StatelessWidget {
   final List movies;
