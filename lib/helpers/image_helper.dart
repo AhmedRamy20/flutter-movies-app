@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/connection/connection_cubit.dart';
-import 'package:movies_app/constents/apis.dart';
+import 'package:movies_app/core/constants/apis.dart';
 
 class SafeMovieImage extends StatelessWidget {
   final String? path;

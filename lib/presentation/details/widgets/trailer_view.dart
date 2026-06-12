@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/constents/apis.dart';
+import 'package:movies_app/core/constants/apis.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TrailerView extends StatelessWidget {

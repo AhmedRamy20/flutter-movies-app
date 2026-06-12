@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/constents/apis.dart';
+import 'package:movies_app/core/constants/apis.dart';
 import 'package:movies_app/core/confg/colors/app_colors.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/data/repository/movies_repo.dart';

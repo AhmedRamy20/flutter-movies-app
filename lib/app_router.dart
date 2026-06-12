@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/details/details_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/details/details_event.dart';
 
-import 'package:movies_app/constents/routes.dart';
+import 'package:movies_app/core/constants/routes.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/data/repository/movies_repo.dart';
 import 'package:movies_app/presentation/home/views/bottom_nav.dart';

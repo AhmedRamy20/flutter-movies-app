@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/app_router.dart';
-import 'package:movies_app/constents/routes.dart';
+import 'package:movies_app/core/constants/routes.dart';
 
 import 'package:movies_app/presentation/home/widgets/movie_card_widget.dart';
 
