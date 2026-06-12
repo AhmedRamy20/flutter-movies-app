@@ -1,4 +1,4 @@
-import 'package:movies_app/constents/apis.dart';
+import 'package:movies_app/core/constants/apis.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/data/web_service/web_service.dart';
 import 'package:movies_app/enums/category.dart';

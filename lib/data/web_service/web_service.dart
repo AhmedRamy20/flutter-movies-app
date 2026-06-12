@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:movies_app/constents/apis.dart';
+import 'package:movies_app/core/constants/apis.dart';
+import 'package:movies_app/core/constants/env.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/exceptions/dio_exceptions.dart';
 
@@ -11,6 +12,7 @@ class WebService {
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
+      // queryParameters: {'api_key': Env.key},
       queryParameters: {'api_key': key},
     );
     dio = Dio(options);

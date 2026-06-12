@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/connection/connection_cubit.dart';
+import 'package:movies_app/constents/apis.dart';
 
 class SafeMovieImage extends StatelessWidget {
   final String? path;
@@ -18,7 +19,7 @@ class SafeMovieImage extends StatelessWidget {
         }
 
         return Image.network(
-          "https://image.tmdb.org/t/p/w500$path",
+          "$movieImageUrl$path",
           width: width,
           height: width,
           fit: BoxFit.cover,

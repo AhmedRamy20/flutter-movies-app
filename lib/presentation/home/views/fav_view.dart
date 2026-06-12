@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/app_router.dart';
+import 'package:movies_app/core/constants/apis.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/data/repository/firestore_fav_repo.dart';
-import 'package:movies_app/constents/routes.dart';
+import 'package:movies_app/core/constants/routes.dart';
+import 'package:movies_app/extension/sized_box.dart';
 
 class FavoritesView extends StatelessWidget {
   const FavoritesView({super.key});
@@ -19,6 +21,7 @@ class FavoritesView extends StatelessWidget {
         title: const Text("My Favorites"),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
 
       body: StreamBuilder<List<Movie>>(
@@ -36,14 +39,14 @@ class FavoritesView extends StatelessWidget {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.favorite_border, size: 80, color: Colors.grey),
-                  SizedBox(height: 12),
+                  12.hight,
                   Text(
                     "No favorites yet",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 6),
+                  6.hight,
                   Text(
                     "Start adding movies you love ❤️",
                     style: TextStyle(color: Colors.grey),
@@ -69,7 +72,7 @@ class FavoritesView extends StatelessWidget {
 
               final imageUrl = movie.posterPath == null
                   ? null
-                  : "https://image.tmdb.org/t/p/w500${movie.posterPath}";
+                  : "$movieImageUrl${movie.posterPath}";
 
               return GestureDetector(
                 onTap: () {

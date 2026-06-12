@@ -1,7 +1,8 @@
 const baseUrl = "https://api.themoviedb.org/3/";
 const imageUrl = "https://image.tmdb.org/t/p/w300";
 const youtubeUrl = "https://www.youtube.com/watch?v=";
-const key = "05c121bd5d6040f4472c5d78097f30cd";
+const movieImageUrl = "https://image.tmdb.org/t/p/w500";
+const key = "PUT API KEY"; // put your own api key
 const nowPlaying = "movie/now_playing";
 const popular = "movie/popular";
 const topRated = "movie/top_rated";

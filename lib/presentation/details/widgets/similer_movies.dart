@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/app_router.dart';
-import 'package:movies_app/constents/routes.dart';
+import 'package:movies_app/core/constants/routes.dart';
 import 'package:movies_app/helpers/image_helper.dart';
 
 class SimilarMoviesShape extends StatefulWidget {
@@ -39,7 +39,6 @@ class _SimilarMoviesShapeState extends State<SimilarMoviesShape> {
         itemBuilder: (context, index) {
           final movie = widget.movies[index];
 
-          // final poster = movie.posterPath;
           return AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {
