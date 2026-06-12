@@ -39,7 +39,7 @@ class _SimilarMoviesShapeState extends State<SimilarMoviesShape> {
         itemBuilder: (context, index) {
           final movie = widget.movies[index];
 
-          final poster = movie.posterPath;
+          // final poster = movie.posterPath;
           return AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {

@@ -33,4 +33,9 @@ class MoviesRepo {
         return webService.fetchMovies(upcoming);
     }
   }
+
+  //trailer
+  Future<String?> getTrailerKey(int movieId) {
+    return webService.getTrailerKey(movieId);
+  }
 }

@@ -7,7 +7,7 @@ import 'package:movies_app/constents/routes.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/data/repository/movies_repo.dart';
 import 'package:movies_app/presentation/home/views/bottom_nav.dart';
-import 'package:movies_app/presentation/home/views/movie_details.dart';
+import 'package:movies_app/presentation/details/views/movie_details.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {

@@ -61,3 +61,23 @@ class _GateDecideViewsState extends State<GateDecideViews> {
     );
   }
 }
+
+
+
+/*
+
+package com.example.movies_app
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
+
+
+
+
+cd android
+gradlew clean
+cd ..
+flutter run
+
+*/

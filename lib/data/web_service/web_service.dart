@@ -61,4 +61,23 @@ class WebService {
       throw Exception(mapDioError(e));
     }
   }
+
+  //trailer
+  Future<String?> getTrailerKey(int movieId) async {
+    try {
+      final response = await dio.get("/movie/$movieId/videos");
+
+      final data = response.data['results'] as List;
+
+      final trailers = data.where((video) {
+        return video['site'] == 'YouTube' && video['type'] == 'Trailer';
+      }).toList();
+
+      if (trailers.isEmpty) return null;
+
+      return trailers.first['key'];
+    } on DioException catch (e) {
+      throw Exception(mapDioError(e));
+    }
+  }
 }
