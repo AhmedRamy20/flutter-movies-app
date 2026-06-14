@@ -256,12 +256,6 @@ When reporting a bug, please include:
 - Screenshots if applicable
 
 
----
-
-## 📄 **License**
-
-<div align="center">
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+-- thank you for your precious time...
 
 
