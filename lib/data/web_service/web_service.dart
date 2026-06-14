@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:movies_app/core/constants/apis.dart';
-import 'package:movies_app/core/constants/env.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/exceptions/dio_exceptions.dart';
 
@@ -12,7 +11,6 @@ class WebService {
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
-      // queryParameters: {'api_key': Env.key},
       queryParameters: {'api_key': key},
     );
     dio = Dio(options);
@@ -52,13 +50,11 @@ class WebService {
   }
 
   //? fetch based on the categ
-  Future<List<Movie>> fetchMovies(String endPoint) async {
+  Future<MoviesModel> fetchMovies(String endPoint, {int page = 1}) async {
     try {
-      final response = await dio.get(endPoint);
+      final response = await dio.get(endPoint, queryParameters: {'page': page});
 
-      final movies = MoviesModel.fromJson(response.data);
-
-      return movies.results;
+      return MoviesModel.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception(mapDioError(e));
     }

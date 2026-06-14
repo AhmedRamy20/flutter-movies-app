@@ -1,13 +1,19 @@
 class MoviesModel {
-  final int page;
   final List<Movie> results;
-
-  MoviesModel({required this.page, required this.results});
+  // kept to help in pagination
+  final int page;
+  final int totalPages;
+  MoviesModel({
+    required this.page,
+    required this.results,
+    required this.totalPages,
+  });
 
   factory MoviesModel.fromJson(Map<String, dynamic> json) {
     return MoviesModel(
       page: json['page'],
       results: (json['results'] as List).map((e) => Movie.fromJson(e)).toList(),
+      totalPages: json['total_pages'] ?? 1,
     );
   }
 }

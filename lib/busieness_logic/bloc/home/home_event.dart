@@ -1,7 +1,9 @@
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/enums/category.dart';
 
-abstract class HomeEvent {}
+abstract class HomeEvent {
+  const HomeEvent();
+}
 
 class LoadTrendingMovies extends HomeEvent {}
 
@@ -18,3 +20,6 @@ class ToggleFavoriteMovieEvent extends HomeEvent {
 class LoadFavoritesEvent extends HomeEvent {}
 
 class SyncFavoritesFromHive extends HomeEvent {}
+
+// from pagination
+class LoadMoreMovies extends HomeEvent {}

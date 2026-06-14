@@ -21,16 +21,19 @@ class MoviesRepo {
   }
 
   //? movies based on selected category
-  Future<List<Movie>> getMovieBasedOnCategory(MovieCategory category) async {
+  Future<MoviesModel> getMovieBasedOnCategory(
+    MovieCategory category, {
+    int page = 1,
+  }) async {
     switch (category) {
       case MovieCategory.nowPlaying:
-        return webService.fetchMovies(nowPlaying);
+        return webService.fetchMovies(nowPlaying, page: page);
       case MovieCategory.popular:
-        return webService.fetchMovies(popular);
+        return webService.fetchMovies(popular, page: page);
       case MovieCategory.topRated:
-        return webService.fetchMovies(topRated);
+        return webService.fetchMovies(topRated, page: page);
       case MovieCategory.upcoming:
-        return webService.fetchMovies(upcoming);
+        return webService.fetchMovies(upcoming, page: page);
     }
   }
 

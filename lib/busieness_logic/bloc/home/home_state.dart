@@ -12,6 +12,10 @@ class HomeState extends Equatable {
   final RequestStatus categoryStatus;
   final String? trendingerror;
   final String? categoryError;
+  // pagination
+  final int currentPage;
+  final bool isLoadingMore;
+  final int totalPages;
   const HomeState({
     this.trendingMovies = const [],
     this.categoryMovies = const [],
@@ -21,6 +25,9 @@ class HomeState extends Equatable {
     this.categoryStatus = RequestStatus.initial,
     this.trendingerror,
     this.categoryError,
+    this.currentPage = 1,
+    this.isLoadingMore = false,
+    this.totalPages = 1,
   });
 
   HomeState copyWith({
@@ -32,6 +39,9 @@ class HomeState extends Equatable {
     RequestStatus? categoryStatus,
     String? trendingerror,
     String? categoryError,
+    int? currentPage,
+    bool? isLoadingMore,
+    int? totalPages,
   }) {
     return HomeState(
       trendingMovies: trendingMovies ?? this.trendingMovies,
@@ -42,6 +52,10 @@ class HomeState extends Equatable {
       categoryStatus: categoryStatus ?? this.categoryStatus,
       trendingerror: trendingerror,
       categoryError: categoryError,
+
+      currentPage: currentPage ?? this.currentPage,
+      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+      totalPages: totalPages ?? this.totalPages,
     );
   }
 
@@ -55,5 +69,8 @@ class HomeState extends Equatable {
     trendingerror,
     categoryStatus,
     categoryError,
+    currentPage,
+    isLoadingMore,
+    totalPages,
   ];
 }

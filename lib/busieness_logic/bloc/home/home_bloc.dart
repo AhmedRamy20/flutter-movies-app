@@ -9,6 +9,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(this.repository) : super(const HomeState()) {
     on<LoadTrendingMovies>(_loadTrending);
     on<LoadCategoryMovies>(_loadCategory);
+    on<LoadMoreMovies>(_loadMoreMovies);
   }
 
   Future<void> _loadTrending(
@@ -41,6 +42,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
+  Future<void> _loadMoreMovies(
+    LoadMoreMovies event,
+    Emitter<HomeState> emit,
+  ) async {
+    if (state.isLoadingMore) return;
+    if (state.currentPage >= state.totalPages) return;
+
+    emit(state.copyWith(isLoadingMore: true));
+
+    emit(state.copyWith(isLoadingMore: true));
+
+    try {
+      final response = await repository.getMovieBasedOnCategory(
+        state.selectedCategory,
+        page: state.currentPage + 1,
+      );
+
+      emit(
+        state.copyWith(
+          categoryMovies: [...state.categoryMovies, ...response.results],
+          currentPage: response.page,
+          totalPages: response.totalPages,
+          isLoadingMore: false,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(isLoadingMore: false));
+    }
+  }
+
   Future<void> _loadCategory(
     LoadCategoryMovies event,
     Emitter<HomeState> emit,
@@ -49,17 +80,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       state.copyWith(
         categoryStatus: RequestStatus.loading,
         categoryError: null,
+        currentPage: 1,
+        totalPages: 1,
+        categoryMovies: [],
       ),
     );
 
     try {
-      final movies = await repository.getMovieBasedOnCategory(event.category);
+      final response = await repository.getMovieBasedOnCategory(
+        event.category,
+        page: 1,
+      );
 
       emit(
         state.copyWith(
-          categoryMovies: movies,
+          categoryMovies: response.results,
           categoryStatus: RequestStatus.success,
           selectedCategory: event.category,
+          currentPage: response.page,
+          totalPages: response.totalPages,
         ),
       );
     } catch (e) {

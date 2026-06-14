@@ -24,6 +24,18 @@ class SimilarMoviesWidget extends StatelessWidget {
             return Center(child: Text(state.error ?? "Something went wrong"));
           }
 
+          if (state.similarMovies.isEmpty) {
+            return const Padding(
+              padding: EdgeInsets.all(16),
+              child: Center(
+                child: Text(
+                  "No similar movies found",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+              ),
+            );
+          }
+
           return SimilarMoviesShape(movies: state.similarMovies);
         },
       ),

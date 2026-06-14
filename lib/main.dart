@@ -73,7 +73,6 @@ class MoviesApp extends StatelessWidget {
               themeMode: mode,
               home: const GateDecideViews(),
               onGenerateRoute: AppRouter.onGenerateRoute,
-              // initialRoute: Routes.home,
             );
           },
         ),

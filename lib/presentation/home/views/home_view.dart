@@ -139,33 +139,32 @@ class _HomeViewState extends State<HomeView>
           ),
 
           // result for serch
-          BlocBuilder<SearchBloc, SearchState>(
-            builder: (context, searchState) {
-              if (searchState.isSearching) {
-                return Expanded(
-                  child: SearchResultsGrid(movies: searchState.results),
-                );
-              }
+          Expanded(
+            child: BlocBuilder<SearchBloc, SearchState>(
+              builder: (context, searchState) {
+                if (searchState.isSearching) {
+                  return SearchResultsGrid(movies: searchState.results);
+                }
 
-              // if not searching
-              return Expanded(
-                child: BlocBuilder<HomeBloc, HomeState>(
+                return BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          buildTrendingSection(state, context),
-
-                          10.hight,
-
-                          buildCategorySection(state, context, controller),
-                        ],
-                      ),
+                    return Column(
+                      children: [
+                        buildTrendingSection(state, context),
+                        const SizedBox(height: 10),
+                        Expanded(
+                          child: buildCategorySection(
+                            state,
+                            context,
+                            controller,
+                          ),
+                        ),
+                      ],
                     );
                   },
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ],
       ),
