@@ -260,7 +260,8 @@ When reporting a bug, please include:
 
 ## 📄 **License**
 
-Distributed under the MIT License. See `LICENSE` file for more information.
+<div align="center">
 
-flutter run -d ios
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 
