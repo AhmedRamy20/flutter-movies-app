@@ -17,6 +17,7 @@ import 'package:movies_app/busieness_logic/bloc/auth/auth_bloc.dart';
 import 'package:movies_app/data/web_service/auth/firebase_auth_provider.dart';
 import 'package:movies_app/data/web_service/web_service.dart';
 import 'package:movies_app/gate_decide.dart';
+import 'package:movies_app/presentation/splash_view.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
@@ -71,7 +72,8 @@ class MoviesApp extends StatelessWidget {
               theme: AppTheme.lightMode,
               darkTheme: AppTheme.darkMode,
               themeMode: mode,
-              home: const GateDecideViews(),
+              // home: const GateDecideViews(),
+              home: const SplashView(),
               onGenerateRoute: AppRouter.onGenerateRoute,
             );
           },
