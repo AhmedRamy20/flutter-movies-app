@@ -51,7 +51,7 @@ class _CategoryGridState extends State<CategoryGrid> {
       padding: const EdgeInsets.all(12),
       itemCount: widget.movies.length + (widget.isLoadingMore ? 1 : 0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
+        crossAxisCount: 2,
         childAspectRatio: 0.65,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,

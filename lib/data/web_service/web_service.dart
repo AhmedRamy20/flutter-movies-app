@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:movies_app/core/constants/apis.dart';
 import 'package:movies_app/data/model/movie_model.dart';
-import 'package:movies_app/exceptions/dio_exceptions.dart';
+import 'package:movies_app/core/exceptions/dio_exceptions.dart';
 
 class WebService {
   late Dio dio;

@@ -1,0 +1,22 @@
+require 'dotenv'
+Dotenv.load
+
+default_platform(:android)
+
+platform :android do
+  desc "Distribute app to firebase distribution"
+  lane :distribute do
+    sh "flutter clean"
+    sh "flutter build apk --release"
+    firebase_app_distribution(
+    app: "1:996643147480:android:c3eb7e3072a32acf1651ad",
+    firebase_cli_token: ENV[FIREBASE_TOKEN],
+    android_artifact_type: "APK",
+    android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+    testers: "ahmedramyars@gmail.com",
+    release_notes: "add movie app distribution"
+  )
+  end
+end
+
+

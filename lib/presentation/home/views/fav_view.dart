@@ -5,7 +5,7 @@ import 'package:movies_app/core/constants/apis.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/data/repository/firestore_fav_repo.dart';
 import 'package:movies_app/core/constants/routes.dart';
-import 'package:movies_app/extension/sized_box.dart';
+import 'package:movies_app/core/extension/sized_box.dart';
 
 class FavoritesView extends StatelessWidget {
   const FavoritesView({super.key});

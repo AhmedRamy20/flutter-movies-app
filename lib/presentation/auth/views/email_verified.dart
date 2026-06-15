@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/auth/auth_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/auth/auth_event.dart';
-import 'package:movies_app/extension/sized_box.dart';
+import 'package:movies_app/core/extension/sized_box.dart';
 
 class VerifiedEmail extends StatefulWidget {
   const VerifiedEmail({super.key});

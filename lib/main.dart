@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:movies_app/app_router.dart';
-import 'package:movies_app/busieness_logic/bloc/connection/connection_cubit.dart';
-import 'package:movies_app/busieness_logic/bloc/favourite/favourite_cubit.dart';
+import 'package:movies_app/busieness_logic/cubit/connection/connection_cubit.dart';
+import 'package:movies_app/busieness_logic/cubit/favourite/favourite_cubit.dart';
 import 'package:movies_app/busieness_logic/bloc/home/home_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/search/search_bloc.dart';
-import 'package:movies_app/busieness_logic/bloc/theme/theme_cubit.dart';
+import 'package:movies_app/busieness_logic/cubit/theme/theme_cubit.dart';
 import 'package:movies_app/core/confg/theme/app_theme.dart';
 import 'package:movies_app/data/firestore_service/favorites_service.dart';
 

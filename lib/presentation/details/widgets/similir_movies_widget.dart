@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/details/details_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/details/details_state.dart';
 import 'package:movies_app/core/confg/colors/app_colors.dart';
-import 'package:movies_app/enums/req_status.dart';
+import 'package:movies_app/core/enums/req_status.dart';
 import 'package:movies_app/presentation/details/widgets/similer_movies.dart';
 
 class SimilarMoviesWidget extends StatelessWidget {

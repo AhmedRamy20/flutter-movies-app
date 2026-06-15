@@ -5,7 +5,7 @@ import 'package:movies_app/busieness_logic/bloc/details/details_event.dart';
 import 'package:movies_app/busieness_logic/bloc/details/details_state.dart';
 import 'package:movies_app/data/model/movie_model.dart';
 import 'package:movies_app/data/repository/movies_repo.dart';
-import 'package:movies_app/enums/req_status.dart';
+import 'package:movies_app/core/enums/req_status.dart';
 
 class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   final MoviesRepo repository;

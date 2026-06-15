@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/extension/is_dark.dart';
+import 'package:movies_app/core/extension/is_dark.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TrendingMoviesShimmer extends StatelessWidget {

@@ -7,7 +7,7 @@ import 'package:movies_app/busieness_logic/bloc/home/home_state.dart';
 import 'package:movies_app/core/confg/colors/app_colors.dart';
 import 'package:movies_app/core/confg/widgets/category_shimmer.dart';
 import 'package:movies_app/core/constants/routes.dart';
-import 'package:movies_app/enums/req_status.dart';
+import 'package:movies_app/core/enums/req_status.dart';
 import 'package:movies_app/presentation/home/widgets/category_grid.dart';
 
 Widget buildCategorySection(

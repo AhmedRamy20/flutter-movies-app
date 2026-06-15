@@ -7,7 +7,7 @@ import 'package:movies_app/data/web_service/auth/auth_exceptions.dart';
 import 'package:movies_app/busieness_logic/bloc/auth/auth_bloc.dart';
 import 'package:movies_app/busieness_logic/bloc/auth/auth_event.dart';
 import 'package:movies_app/busieness_logic/bloc/auth/auth_state.dart';
-import 'package:movies_app/extension/sized_box.dart';
+import 'package:movies_app/core/extension/sized_box.dart';
 import 'package:movies_app/utils/dialogs/error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -115,7 +115,7 @@ class _LoginViewState extends State<LoginView> {
                             8.hight,
 
                             const Text(
-                              "Watch your favorite movies anytime",
+                              "Explore your favorite movies anytime",
                               style: TextStyle(color: Colors.white70),
                             ),
 

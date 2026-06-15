@@ -47,3 +47,7 @@ app.*.map.json
 
 #Environments and secrets
 lib/core/constants/env.dart
+
+# Fastlane environment variables
+android/fastlane/.env
+**/.env

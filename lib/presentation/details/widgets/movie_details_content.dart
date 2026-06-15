@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/data/model/movie_model.dart';
-import 'package:movies_app/extension/sized_box.dart';
+import 'package:movies_app/core/extension/sized_box.dart';
 
 class MovieDetailsContentWidget extends StatelessWidget {
   final Movie movie;

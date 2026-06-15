@@ -1,5 +1,5 @@
 import 'package:movies_app/data/model/movie_model.dart';
-import 'package:movies_app/enums/category.dart';
+import 'package:movies_app/core/enums/category.dart';
 
 abstract class HomeEvent {
   const HomeEvent();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/confg/colors/app_colors.dart';
-import 'package:movies_app/extension/is_dark.dart';
+import 'package:movies_app/core/extension/is_dark.dart';
 import 'package:movies_app/presentation/home/views/fav_view.dart';
 import 'package:movies_app/presentation/home/views/home_view.dart';
 

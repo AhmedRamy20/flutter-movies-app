@@ -22,7 +22,6 @@ class MovieSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         cursorColor: AppColors.primary,
-
         onChanged: onChanged,
         decoration: InputDecoration(
           // focusedBorder: OutlineInputBorder(),

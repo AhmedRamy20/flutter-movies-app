@@ -2,7 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:movies_app/data/model/movie_model.dart';
-import 'package:movies_app/enums/req_status.dart';
+import 'package:movies_app/core/enums/req_status.dart';
 
 class MovieDetailsState extends Equatable {
   final Movie movie;
