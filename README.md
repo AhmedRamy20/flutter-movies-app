@@ -256,6 +256,6 @@ When reporting a bug, please include:
 - Screenshots if applicable
 
 
--- thank you for your precious time...
+-- thank you for your precious time.....
 
 
